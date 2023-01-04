@@ -1,7 +1,8 @@
+// link game from html div
 const game = document.getElementById('game')
 const scoreDisplay = document.getElementById('score')
 let score = 0
-
+// list array of genres with API id links
 const genres = [
     {
         name: 'Books',
@@ -22,7 +23,7 @@ const genres = [
 ]
 
 const levels = ['easy', 'medium', 'hard']
-
+// link trivia API to add genre questions
 function addGenre(genre) {
     const column = document.createElement('div')
     column.classList.add('genre-column')
@@ -42,9 +43,12 @@ function addGenre(genre) {
         }
         if (level === 'hard') {
             card.innerHTML = 300
+            // sets point values for answering different level questions  
         }
-
+        
         fetch(`https://opentdb.com/api.php?amount=1&category=${genre.id}&difficulty=${level}&type=boolean`)
+        // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        // This code fetches the API so that the game can access the trivia questions/answers 
             .then(response => response.json())
             .then(data => {
             
@@ -52,6 +56,8 @@ function addGenre(genre) {
                 card.setAttribute('data-question', data.results[0].question)
                 card.setAttribute('data-answer', data.results[0].correct_answer)
                 card.setAttribute('data-value', card.getInnerHTML())
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML
+                // This code allows me to receive the data value of each card from their innerHTML 
             })
             .then(done => card.addEventListener('click', flipCard))
 
@@ -73,37 +79,43 @@ function flipCard() {
     trueButton.addEventListener('click', getResult)
     falseButton.addEventListener('click', getResult)
     textDisplay.innerHTML = this.getAttribute('data-question')
+    // gets question to appear when card is clicked
     this.append(textDisplay, trueButton, falseButton)
 
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.removeEventListener('click', flipCard))
+    // this code prevents other cards from being clicked once one card has been flipped
 }
 
 function getResult() {
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.addEventListener('click', flipCard))
 
-    const cardOfButton = this.parentElement
-    if (cardOfButton.getAttribute('data-answer') === this.innerHTML) {
-        score = score + parseInt(cardOfButton.getAttribute('data-value'))
+    const buttonCard = this.parentElement
+    if (buttonCard.getAttribute('data-answer') === this.innerHTML) {
+        score = score + parseInt(buttonCard.getAttribute('data-value'))
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+        // this code ensures that the score added will be a number rather than a string
         scoreDisplay.innerHTML = score
-        cardOfButton.classList.add('correct-answer')
+        buttonCard.classList.add('correct-answer')
         setTimeout(() => {
-            while (cardOfButton.firstChild) {
-                cardOfButton.removeChild(cardOfButton.lastChild)
+            while (buttonCard.firstChild) {
+                buttonCard.removeChild(buttonCard.lastChild)
             }
-            cardOfButton.innerHTML = cardOfButton.getAttribute('data-value')
+            buttonCard.innerHTML = buttonCard.getAttribute('data-value')
         }, 100)
+        // removes all text and buttons from card, preventing score from being added further with same card
     } else {
-        cardOfButton.classList.add('wrong-answer')
+        buttonCard.classList.add('wrong-answer')
         setTimeout(() => {
-            while (cardOfButton.firstChild) {
-                cardOfButton.removeChild(cardOfButton.lastChild)
+            while (buttonCard.firstChild) {
+                buttonCard.removeChild(buttonCard.lastChild)
             }
-            cardOfButton.innerHTML = 0
+            buttonCard.innerHTML = 0
         }, 100)
+        
     }
-    cardOfButton.removeEventListener('click',flipCard)
+    buttonCard.removeEventListener('click',flipCard)
 }
 
 

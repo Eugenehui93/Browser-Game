@@ -11,11 +11,13 @@ body {
 }
 #game {
     display: flex;
+    /* stacks genre columns in a row */
 }
 .genre-column {
     display: flex;
     flex-direction: column;
     text-align: center;
+    
 
 }
 .card{
@@ -27,4 +29,19 @@ body {
     text-align: center;
     padding: 5px;
     margin: 10px;
+}
+.correct-answer {
+    background-color: green;
+}
+.wrong-answer {
+    background-color: red;
+}
+.true-button {
+    background-color:rgb(79, 79, 219);
+}
+.false-button {
+    background-color: gray;
+}
+button {
+    margin: 3px;
 }
