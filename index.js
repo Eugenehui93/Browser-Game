@@ -84,6 +84,7 @@ function flipCard() {
 
     const allCards = Array.from(document.querySelectorAll('.card'))
     allCards.forEach(card => card.removeEventListener('click', flipCard))
+    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener
     // this code prevents other cards from being clicked once one card has been flipped
 }
 

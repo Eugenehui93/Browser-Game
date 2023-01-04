@@ -1,4 +1,5 @@
 # Browser-Game
 ## This is a trivia game with a format similar to Jeopardy. It is a single player game which has a true/false format with varying levels of difficulty and different genres. The player is able to keep track of their score as they play. This project uses html, css, and javascript. 
-
+## There are four categories in this game, and each category has 3 trivia cards of increasing difficulty level: easy(100 points), medium(200 points), and hard(300 points). WHen the player clicks on a card, a trivia question will show, with the buttons 'true' or 'false.' If the question is answered correctly, points will be added to the total score, shown at the bottom of the game. The card then changes color, and the player is able to select another card to answer. 
 ## The game uses this API to produce questions from different trivia genres. `https://opentdb.com/api.php?amount=1&category=${genre.id}&difficulty=${level}&type=boolean`
+## https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener 
